@@ -20,6 +20,7 @@ export default defineConfig({
       { text: '入门', link: '/ch02-startup' },
       { text: '核心', link: '/ch07-agent-loop' },
       { text: '进阶', link: '/ch14-tui' },
+      { text: '工程学', link: '/ch18-production-params' },
       { text: '术语表', link: '/appendix-glossary' },
     ],
 
@@ -52,6 +53,11 @@ export default defineConfig({
         chapter('第 15 章 app-server 协议族', 'ch15-app-server.md'),
         chapter('第 16 章 exec 无头模式与 CI 集成', 'ch16-exec.md'),
         chapter('第 17 章 工程实践', 'ch17-engineering.md'),
+      ]),
+      part('Part IV · Agent 工程学', [
+        chapter('第 18 章 生产参数手册', 'ch18-production-params.md'),
+        chapter('第 19 章 优雅降级', 'ch19-graceful-degradation.md'),
+        chapter('第 20 章 失控控制', 'ch20-budget-runaway.md'),
       ]),
       {
         text: '附录',

@@ -537,6 +537,8 @@ rg -n "build:clippy" .bazelrc | head -8
 
 本章回答了「100+ crate 如何不烂掉」：crate 按变化频率与下游广度划分，`protocol` 小而稳、`core` 大而受节食令约束、`core-api` 做窄门面；测试呈金字塔——单元测试贴实现、`test_codex` 集成测试用「假模型 + 真内核」覆盖行为、insta 快照把 UI 变成可 review 的文本 diff；cargo 与 bazel 双构建以 `Cargo.lock` 为单一事实来源，用 `just bazel-lock-update` 加 CI 漂移检查维持同步；`AGENTS.md` 把这一切写成精确到命令与数字的工程宪法，同时服务人类与 AI 贡献者。
 
+至此，「读 Codex」的部分结束。接下来 Part IV 换一个问题：**你要自建 Agent，该抄哪些作业**——从[第 18 章 生产参数手册](/ch18-production-params)开始。
+
 思考题：
 
 1. `AGENTS.md` 规定模块超 800 LoC 就该拆，但 `chatwidget.rs` 仍有 2000+ 行。如果你接手拆解，第一步会拆什么出去？去 `tui/src/chatwidget/` 目录里看看已经拆了哪些，验证你的判断是否同向。
