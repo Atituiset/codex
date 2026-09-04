@@ -15,7 +15,7 @@ export default defineConfig({
     siteTitle: 'Codex CLI 源码深度解读',
 
     nav: [
-      { text: '前言', link: '/intro' },
+      { text: '前言', link: '/' },
       { text: '导览', link: '/ch01-overview' },
       { text: '入门', link: '/ch02-startup' },
       { text: '核心', link: '/ch07-agent-loop' },
@@ -26,7 +26,7 @@ export default defineConfig({
     sidebar: [
       {
         text: '前言',
-        items: [chapter('为什么读 Codex 源码', 'intro.md')],
+        items: [chapter('为什么读 Codex 源码', 'index.md')],
       },
       part('Part 0 · 导览', [
         chapter('第 1 章 全景地图', 'ch01-overview.md'),

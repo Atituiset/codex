@@ -17,7 +17,7 @@
 | 中文译法 | 英文原文 | 首次出现章节 | 备注 |
 |----------|----------|--------------|------|
 | 回合 | turn | [第 1 章](ch01-overview.md) | turn id = 受理该回合的 submission id（[第 6 章](ch06-core-session.md)）；回合内事件经 `Event.id` 归因 |
-| 主线 / 会话主线 | thread | [前言](intro.md) | 原 conversation；`CodexThread`/`ThreadId` 保留英文。章节内首次实质使用在[第 7 章](ch07-agent-loop.md)（子主线）与[第 12 章](ch12-mcp.md)（每条会话主线）。注意第 1 章的「主线」多为叙事比喻（「全书的主线索」），不是本术语 |
+| 主线 / 会话主线 | thread | [前言](index.md) | 原 conversation；`CodexThread`/`ThreadId` 保留英文。章节内首次实质使用在[第 7 章](ch07-agent-loop.md)（子主线）与[第 12 章](ch12-mcp.md)（每条会话主线）。注意第 1 章的「主线」多为叙事比喻（「全书的主线索」），不是本术语 |
 | 会话 | session | [第 1 章](ch01-overview.md) | `Session` 是运行时对象；与「主线」常互换，但持久化身份（thread_id、rollout 文件）属于主线（[第 6 章](ch06-core-session.md)/[第 13 章](ch13-persistence.md)） |
 | Agent Loop | agent loop | [第 1 章](ch01-overview.md) | 不翻译；在源码中的落点是 `run_turn()`（[第 7 章](ch07-agent-loop.md)，全书重心） |
 | 采样请求 | sampling request | [第 7 章](ch07-agent-loop.md) | 一次模型调用；对应 `run_sampling_request()` / `try_run_sampling_request()`。一个回合含多次采样请求，每次都全量重发历史 |
