@@ -1,3 +1,34 @@
+---
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
+
+hero:
+  name: Codex CLI 源码深度解读
+  text: 面向入门级 Agent 开发者的源码精读
+  tagline: 基于 openai/codex（codex-rs）逐函数走读：从一次对话的生命周期，到 Agent Loop、工具系统与安全模型
+  actions:
+    - theme: brand
+      text: 开始阅读 →
+      link: /ch01-overview
+    - theme: alt
+      text: 术语表
+      link: /appendix-glossary
+
+features:
+  - icon: 🗺️
+    title: 全景地图
+    details: 100+ Rust crate、3000+ 源文件的产品形态与目录结构，一张主线索地图贯穿全书
+  - icon: 🔁
+    title: Agent Loop 逐行走读
+    details: 第 7 章全书重心：run_turn 主循环、流式事件分发、工具路由与并发执行
+  - icon: 🛡️
+    title: 安全模型
+    details: 三平台沙箱（seatbelt / landlock / windows）、execpolicy 策略引擎与审批流
+  - icon: 💾
+    title: 持久化与恢复
+    details: rollout JSONL 会话记录、sqlite state_db 与崩溃恢复链路
+---
+
 # 前言：为什么读 Codex 源码
 
 > 本书基于 openai/codex 仓库 commit **`4f39251a01`**（main 分支，2026-08）撰写。
@@ -35,4 +66,4 @@
 - 统一译法：turn=回合，thread=主线（会话），approval=审批，sandbox=沙箱，compact=压缩，rollout 不翻译（指 JSONL 会话记录）。完整术语表见附录 A。
 - 流程图使用 ASCII 字符画，节点名尽量使用真实类型/函数名，方便对照源码。
 
-准备好了吗？先从[第 1 章 全景地图](ch01-overview.md)开始。
+准备好了吗？先从[第 1 章 全景地图](/ch01-overview)开始。

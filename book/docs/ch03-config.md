@@ -407,7 +407,7 @@ persistence = "save-all"
 
 `-c` 覆盖如何变成一层？`build_cli_overrides_layer`（`config/src/overrides.rs:9-15`）把 `(点路径, 值)` 列表逐条种进一棵空的 TOML 树：`model="gpt-5.2"` 长成 `{model: "gpt-5.2"}`，`shell_environment_policy.inherit=all` 长成 `{shell_environment_policy: {inherit: "all"}}`。点路径逐段下钻、缺表建表的逻辑在 `apply_toml_override`（`overrides.rs:18-99`）。
 
-**profile 的继承**也在这段发生。本基线的 profile 是「v2」形态：`--profile fast`（定义见 `cli/src/main.rs:466-468`，文档原文就是 "Layer $CODEX_HOME/<name>.config.toml on top of the base user config"）让 loader 把 `~/.codex/fast.config.toml` 作为第二个用户层压在基础 `config.toml` 之上（`loader/mod.rs:347-358`）。合并由后面统一的值树深合并完成，所以 profile 文件只需写差异键——这就是「继承」的全部实现，没有单独的继承语法。路径拼接本身只有几行：
+**profile 的继承**也在这段发生。本基线的 profile 是「v2」形态：`--profile fast`（定义见 `cli/src/main.rs:466-468`，文档原文就是 `"Layer $CODEX_HOME/<name>.config.toml on top of the base user config"`）让 loader 把 `~/.codex/fast.config.toml` 作为第二个用户层压在基础 `config.toml` 之上（`loader/mod.rs:347-358`）。合并由后面统一的值树深合并完成，所以 profile 文件只需写差异键——这就是「继承」的全部实现，没有单独的继承语法。路径拼接本身只有几行：
 
 ```rust
 // 来源：codex-rs/core/src/config/mod.rs:1894-1902（常量见 mod.rs:239）

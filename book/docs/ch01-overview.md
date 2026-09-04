@@ -43,10 +43,10 @@
 │ features     功能开关                                        │
 │ app-server-protocol  v2 JSON-RPC payload 定义      → Ch15    │
 ├─ 认证与模型接入 ─────────────────────────────────────────────┤
-│ login        ChatGPT 登录 / API key                → Ch4     │
+│ login        ChatGPT 登录 / API key（含 auth 子模块）→ Ch4     │
 │ model-provider-info / model-provider  多提供方抽象  → Ch4     │
 │ codex-api    Responses API 客户端传输层            → Ch4/7   │
-│ auth         凭据存储刷新                          → Ch4     │
+│ aws-auth     AWS SigV4 / Bedrock 凭据              → Ch4     │
 ├─ Agent 内核 ─────────────────────────────────────────────────┤
 │ core         Session/turn 循环/压缩/审批编排        → Ch6-11  │
 │ tools        ToolSpec/注册/执行器                  → Ch9     │
@@ -59,15 +59,15 @@
 ├─ 扩展生态 ───────────────────────────────────────────────────┤
 │ rmcp-client  MCP 客户端                            → Ch12    │
 │ codex-mcp    MCP 连接管理                          → Ch12    │
-│ skills / plugins / connectors                     （略讲）   │
+│ skills / plugin / core-plugins / connectors        （略讲）   │
 ├─ 会话持久化 ─────────────────────────────────────────────────┤
 │ rollout      JSONL 会话记录                        → Ch13    │
-│ state / state-db（sqlite）                        → Ch13     │
+│ state        sqlite 会话状态库                     → Ch13     │
 │ thread-store 会话存储接口                          → Ch13    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
-> 名字带 `*` 的是一族 crate（如 `app-server-*` 有 transport/protocol/daemon/client 五个），不是单个。
+> 名字带 `*` 的是一族 crate（如 `app-server-*` 除核心的 transport/protocol/daemon/client 外还有测试辅助成员），不是单个。
 
 ## 核心数据结构
 
@@ -85,10 +85,10 @@ pub enum Op {
 // 来源：codex-rs/protocol/src/protocol.rs（结构示意）
 // EventMsg：内核 → 外界 的事件流。内核说"发生了什么"
 pub enum EventMsg {
-    TaskStarted(/* ... */),
+    TurnStarted(/* ... */),
     AgentMessageContentDelta(/* ... */), // 模型输出的增量文本
     ExecApprovalRequest(/* ... */), // 请求用户审批命令
-    TaskComplete(/* ... */),
+    TurnComplete(/* ... */),
     // ...
 }
 ```
@@ -127,7 +127,7 @@ cli/src/main.rs ──arg0 分发──► tui::run_main() 或 exec 或 app-serv
 认证 AuthManager：ChatGPT token 或 API key (Ch4)
   │
   ▼
-ThreadManager::new_conversation() ──► CodexThread + Session (Ch6)
+ThreadManager::start_thread() ──► CodexThread + Session (Ch6)
   │
   ▼
 用户输入 ──► Op::TurnInput ──► 任务队列 ──► RegularTask (Ch6)
@@ -188,7 +188,7 @@ cargo run --bin codex -- --help
 
 ```shell
 cd codex-rs
-rg -n "pub async fn run_turn" core/src/session/turn.rs
+rg -n "pub\(crate\) async fn run_turn" core/src/session/turn.rs
 rg -n "pub struct ModelClient" core/src/client.rs
 rg -n "enum EventMsg" protocol/src/protocol.rs
 ```

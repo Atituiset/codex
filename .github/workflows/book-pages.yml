@@ -1,11 +1,11 @@
-name: Deploy mdBook to GitHub Pages
+name: Deploy VitePress book to GitHub Pages
 
 on:
   push:
     branches: [main]
     paths:
       - "book/**"
-      - ".github/workflows/mdbook.yml"
+      - ".github/workflows/book-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -23,21 +23,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install mdbook
-        run: |
-          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.52/mdbook-v0.4.52-x86_64-unknown-linux-gnu.tar.gz \
-            | tar -xz
-          chmod +x mdbook
-          ./mdbook --version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: book/package-lock.json
 
       - name: Build book
-        run: ./mdbook build book
+        run: |
+          npm ci
+          npm run build
+        working-directory: book
+
+      - name: Disable Jekyll
+        run: touch book/docs/.vitepress/dist/.nojekyll
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: book/book
+          path: book/docs/.vitepress/dist
 
   deploy:
     needs: build

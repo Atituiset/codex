@@ -804,7 +804,7 @@ TUI 屏幕上你看到的"逐字打印 → 命令卡片 → diff 摘要 → 输�
 
 **为什么 step 级快照（`StepContext`）而不是全用 `TurnContext`？** 注释里满屏的「Legacy turn model; step-scoped execution should use `StepContext`」说明这是演进中的重构：模型 fallback、压缩用模型、Guardian 审批策略都可能在回合中途变化。把"这次请求"的不变量钉成一个结构体，比在 40 个字段的 `TurnContext` 里争论"这个字段此刻还有效吗"要可靠。
 
-**代价。** `turn.rs` 单文件 2791 行，`try_run_sampling_request` 一个函数近 600 行、11 个参数、`match` 十几个变体——它已经顶到仓库自己 AGENTS.md 里「模块超 800 行就该拆」的红线。Plan 模式的流式状态（`PlanModeStreamState`）、multi-agent mailbox 抢占（`preempt_for_mailbox_mail`）、analytics 采样都挤在这个循环里，读代码时要有意识地过滤。功能上，无上限循环依赖压缩兜底这一点，对非 OpenAI provider（压缩能力参差）是真实风险。
+**代价。** `turn.rs` 单文件 2791 行，`try_run_sampling_request` 一个函数近 600 行、9 个参数、`match` 十几个变体——它已经顶到仓库自己 AGENTS.md 里「模块超 800 行就该拆」的红线。Plan 模式的流式状态（`PlanModeStreamState`）、multi-agent mailbox 抢占（`preempt_for_mailbox_mail`）、analytics 采样都挤在这个循环里，读代码时要有意识地过滤。功能上，无上限循环依赖压缩兜底这一点，对非 OpenAI provider（压缩能力参差）是真实风险。
 
 ## 动手实验
 

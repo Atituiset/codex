@@ -1,2 +1,4 @@
-# mdbook 构建产物
-book/
+# VitePress 构建产物
+docs/.vitepress/dist
+docs/.vitepress/cache
+node_modules/
