@@ -58,6 +58,7 @@ export default defineConfig({
         chapter('第 18 章 生产参数手册', 'ch18-production-params.md'),
         chapter('第 19 章 优雅降级', 'ch19-graceful-degradation.md'),
         chapter('第 20 章 失控控制', 'ch20-budget-runaway.md'),
+        chapter('第 21 章 形式化收束', 'ch21-formalization.md'),
       ]),
       {
         text: '附录',
